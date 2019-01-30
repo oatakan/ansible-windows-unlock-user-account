@@ -16,7 +16,8 @@
       become: yes
       become_method: runas
       become_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
-      ansible_become_pass: "{{ domain_admin_password }}"
+      vars:
+        ansible_become_pass: "{{ domain_admin_password }}"
 
     - name: get whoami information
       win_whoami:
