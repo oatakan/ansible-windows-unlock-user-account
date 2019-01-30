@@ -1,11 +1,23 @@
 - name: test unlock account
   hosts: all
+  gather_facts: no
   vars:
     ansible_port: 5986
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   tasks:
+    - name: Add Ansible group to a local Remote Management Users
+      win_group_membership:
+        name: Remote Management Users
+        members:
+          - "{{ dns_domain_name }}\\{{ user1 }}"
+        state: present
+      become: yes
+      become_method: runas
+      become_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+      ansible_become_pass: "{{ domain_admin_password }}"
+
     - name: get whoami information
       win_whoami:
       register: whoami
