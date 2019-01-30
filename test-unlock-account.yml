@@ -8,3 +8,7 @@
   tasks:
     - name: get whoami information
       win_whoami:
+      register: whoami
+
+    - debug:
+        var: whoami
