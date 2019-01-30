@@ -11,7 +11,7 @@
       win_group_membership:
         name: Remote Management Users
         members:
-          - "{{ dns_domain_name }}\\{{ user1 }}"
+          - "{{ dns_domain_name }}\\user1"
         state: present
       become: yes
       become_method: runas
