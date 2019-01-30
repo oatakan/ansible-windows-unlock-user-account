@@ -1,4 +1,4 @@
-- name: test unlock account
+- name: add remote management server
   hosts: all
   gather_facts: no
   vars:
@@ -19,6 +19,22 @@
       vars:
         ansible_become_pass: "{{ domain_admin_password }}"
 
+    - name: get whoami information
+      win_whoami:
+      register: whoami
+
+    - debug:
+        var: whoami
+
+- name: test unlock account
+  hosts: all
+  gather_facts: no
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  tasks:
     - name: get whoami information
       win_whoami:
       register: whoami
