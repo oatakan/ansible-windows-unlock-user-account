@@ -1,0 +1,20 @@
+- name: test unlock account
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+  pre_tasks:
+    - name: set ip address of windows ad
+      set_fact:
+        dns_servers: "{{ hostvars['windows_ad_server']['ip_address'] }}"
+      when:
+        - "'windows_ad_server' in play_hosts"
+        - hostvars['windows_ad_server']['ip_address'] is defined
+  roles:
+    - domain
+    - unlock-windows-account
+
+  post_tasks:
+    - name: test login
