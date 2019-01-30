@@ -36,7 +36,7 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-  ansible_ssh_pass: 'bogusPassword'
+    ansible_ssh_pass: 'bogusPassword'
   tasks:
     - name: get whoami information
       win_whoami:
